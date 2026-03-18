@@ -28,6 +28,19 @@ async function fetchAndScrapeWithLogin(
       return [];
     }
 
+    // Step1: GETでセッションCookieを取得
+    const getRes = await axios.get(site.loginUrl, {
+      headers: {'User-Agent': axiosConfig.headers['User-Agent']},
+      validateStatus: (status) => status < 400,
+    });
+    const initCookies: string[] =
+      (getRes.headers['set-cookie'] as string[]) ?? [];
+    const initCookieStr = initCookies
+      .map((c: string) => c.split(';')[0])
+      .join('; ');
+    console.log(`  Session cookie: ${initCookieStr || '(none)'}`);
+
+    // Step2: セッションCookieを引き継いでPOSTログイン
     const loginRes = await axios.post(
       site.loginUrl,
       new URLSearchParams(credentials),
@@ -35,17 +48,26 @@ async function fetchAndScrapeWithLogin(
         headers: {
           'User-Agent': axiosConfig.headers['User-Agent'],
           'Content-Type': 'application/x-www-form-urlencoded',
+          Referer: site.loginUrl,
+          ...(initCookieStr ? {Cookie: initCookieStr} : {}),
         },
-        maxRedirects: 0,
+        maxRedirects: 5,
         validateStatus: (status) => status < 400,
       },
     );
 
     console.log(`  Login status: ${loginRes.status}`);
 
-    const rawCookies: string[] =
+    // POST後のSet-CookieとGET時のCookieをマージ
+    const postCookies: string[] =
       (loginRes.headers['set-cookie'] as string[]) ?? [];
-    const cookieStr = rawCookies.map((c: string) => c.split(';')[0]).join('; ');
+    const cookieMap = new Map<string, string>();
+    [...initCookies, ...postCookies].forEach((c: string) => {
+      const part = c.split(';')[0];
+      const [key] = part.split('=');
+      cookieMap.set(key.trim(), part);
+    });
+    const cookieStr = Array.from(cookieMap.values()).join('; ');
 
     if (!cookieStr) {
       console.error(
