@@ -2,14 +2,10 @@
 <rss version="2.0">
   <channel>
     <title>リリースノート まとめ RSS</title>
-    <link>https://kerosene-yamada.github.io/rss-generator/feed.xml</link>
+    <link>https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml</link>
     <description>複数サービスのリリースノート・お知らせをまとめたRSSフィード</description>
     <language>ja</language>
-<<<<<<< HEAD
-    <lastBuildDate>Wed, 18 Mar 2026 12:05:07 GMT</lastBuildDate>
-=======
-    <lastBuildDate>Wed, 18 Mar 2026 11:50:14 GMT</lastBuildDate>
->>>>>>> 574b2b78dbc879237b316ea5abad6c05a265d701
+    <lastBuildDate>Wed, 18 Mar 2026 12:16:23 GMT</lastBuildDate>
     
     <item>
       <title>Gemini API: 2026 年 3 月 16 日</title>
