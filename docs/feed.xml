@@ -5,7 +5,11 @@
     <link>https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml</link>
     <description>複数サービスのリリースノート・お知らせをまとめたRSSフィード</description>
     <language>ja</language>
+<<<<<<< HEAD
     <lastBuildDate>Wed, 18 Mar 2026 12:18:44 GMT</lastBuildDate>
+=======
+    <lastBuildDate>Wed, 18 Mar 2026 12:16:23 GMT</lastBuildDate>
+>>>>>>> 98fe1784d825d8288e0b7a3b8689b797af4f5167
     
   </channel>
 </rss>
