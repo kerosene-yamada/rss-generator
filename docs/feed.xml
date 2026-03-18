@@ -2,10 +2,603 @@
 <rss version="2.0">
   <channel>
     <title>リリースノート まとめ RSS</title>
-    <link>https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml</link>
+    <link>https://kerosene-yamada.github.io/rss-generator/feed.xml</link>
     <description>複数サービスのリリースノート・お知らせをまとめたRSSフィード</description>
     <language>ja</language>
-    <lastBuildDate>Wed, 18 Mar 2026 11:32:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 11:50:14 GMT</lastBuildDate>
     
+    <item>
+      <title>Gemini API: 2026 年 3 月 16 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 3 月 16 日</pubDate>
+      <description>ユーザーの請求エクスペリエンスを向上させるため、使用量階層と請求先アカウントの費用上限を刷新しました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 3 月 12 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 3 月 12 日</pubDate>
+      <description>AI Studio の課金にプロジェクト単位の費用上限を導入しました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 3 月 10 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 3 月 10 日</pubDate>
+      <description>初のマルチモーダル エンベディング モデルである gemini-embedding-2-preview をリリースしました。テキスト、画像、動画、音声、PDF の入力をサポートし、すべてのモダリティを統合されたエンベディング空間にマッピングします。詳細については、エンベディングをご覧ください。
+サポート終了のお知らせ: gemini-2.5-flash-lite-preview-09-2025 モ</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 3 月 9 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 3 月 9 日</pubDate>
+      <description>Gemini 3 Pro プレビュー版モデルはシャットダウンされました。gemini-3-pro-preview が gemini-3.1-pro-preview を指すようになりました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 3 月 3 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 3 月 3 日</pubDate>
+      <description>Gemini 3 シリーズ初の Flash-Lite モデルである Gemini 3.1 Flash-Lite プレビュー版をリリースしました。仕様、特定のアップデート、デベロッパー向けガイダンスについては、モデルページをご覧ください。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 2 月 26 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 2 月 26 日</pubDate>
+      <description>Nano Banana 2（Gemini 3.1 Flash Image Preview）をリリースしました。これは、スピードと大量のユースケース向けに最適化された高効率モデルです。
+非推奨のお知らせ: Gemini 3 Pro プレビュー版（gemini-3-pro-preview）は 2026 年 3 月 9 日にシャットダウンされます。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 2 月 19 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 2 月 19 日</pubDate>
+      <description>新しい Gemini 3 シリーズ ファミリーの最新バージョンである Gemini 3.1 Pro プレビュー版をリリースしました。
+bash とツールの両方を使用して構築しているユーザー向けに、カスタムツールの優先順位付けに優れた別のエンドポイント gemini-3.1-pro-preview-customtools をリリースしました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 2 月 18 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 2 月 18 日</pubDate>
+      <description>非推奨のお知らせ: 以下のモデルは 2026 年 6 月 1 日にシャットダウンされます。
+
+
+gemini-2.0-flash
+gemini-2.0-flash-001
+gemini-2.0-flash-lite
+gemini-2.0-flash-lite-001</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 2 月 17 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 2 月 17 日</pubDate>
+      <description>次のモデルはシャットダウンされています。
+
+
+gemini-2.5-flash-preview-09-25
+imagen-4.0-generate-preview-06-06
+imagen-4.0-ultra-generate-preview-06-06</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 1 月 29 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 1 月 29 日</pubDate>
+      <description>gemini-3-pro-preview と gemini-3-flash-preview でコンピュータ使用ツールのサポートを開始しました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 1 月 21 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 1 月 21 日</pubDate>
+      <description>latest エイリアスを変更しました。
+
+
+gemini-pro-latest が gemini-3-pro-preview に切り替わりました
+gemini-flash-latest が gemini-3-flash-preview に切り替わりました</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 1 月 15 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 1 月 15 日</pubDate>
+      <description>非推奨のお知らせ: 以下のモデルは 2026 年 2 月 17 日にシャットダウンされます。
+
+
+gemini-2.5-flash-preview-09-25
+imagen-4.0-generate-preview-06-06
+imagen-4.0-ultra-generate-preview-06-06
+
+gemini-2.5-flash-image-preview モデルがシャットダウンされま</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 1 月 14 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 1 月 14 日</pubDate>
+      <description>text-embedding-004 モデルはシャットダウンされました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 1 月 13 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 1 月 13 日</pubDate>
+      <description>Veo の 4K 出力解像度を追加し、すべての解像度で縦向き動画のサポートを強化しました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 1 月 12 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 1 月 12 日</pubDate>
+      <description>モデルのライフサイクル機能がリリースされました。一部のモデルでは、ライフサイクル ステージと非推奨のタイムラインが指定されるようになりました。詳細については、次のドキュメントをご覧ください。
+
+
+モデルのステージ</description>
+    </item>
+    <item>
+      <title>Gemini API: 2026 年 1 月 8 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2026 年 1 月 8 日</pubDate>
+      <description>Gemini API のデータ入力ソースとして、Cloud Storage バケットとパブリックおよびプライベート DB の事前署名付き URL のサポートを開始しました。ファイルサイズの上限も 20 MB から 100 MB に引き上げられています。詳しくは、ファイル入力方法ガイドをご覧ください。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2025 年 12 月 19 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2025 年 12 月 19 日</pubDate>
+      <description>v1beta で Interactions API の公開プレビューに互換性を破る変更を導入しました。思考モデルの「思考」のコンセプトに沿うように、total_reasoning_tokens フィールドの名前を total_thought_tokens に変更しました。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2025 年 12 月 17 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2025 年 12 月 17 日</pubDate>
+      <description>Gemini 3 Flash プレビュー版（gemini-3-flash-preview）をリリースしました。このモデルは、大規模モデルに匹敵する最先端のパフォーマンスを低コストで実現します。視覚的および空間的推論とエージェント コーディング機能がアップグレードされています。次の新機能に関するドキュメントをご覧ください。
+
+
+マルチモーダル関数レスポンス
+画像を含むコードの実行</description>
+    </item>
+    <item>
+      <title>Gemini API: 2025 年 12 月 12 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2025 年 12 月 12 日</pubDate>
+      <description>Live API の新しいネイティブ音声モデルである gemini-2.5-flash-native-audio-preview-12-2025 をリリースしました。この更新により、モデルの複雑なワークフローを処理する能力が向上します。詳細については、Live API ガイドと Gemini 2.5 Flash ネイティブ音声をご覧ください。</description>
+    </item>
+    <item>
+      <title>Gemini API: 2025 年 12 月 11 日</title>
+      <link>https://ai.google.dev/gemini-api/docs/changelog?hl=ja</link>
+      <guid isPermaLink="true">https://ai.google.dev/gemini-api/docs/changelog?hl=ja</guid>
+      <pubDate>2025 年 12 月 11 日</pubDate>
+      <description>Interactions API のベータ版をリリースしました。この API は、Gemini モデルとエージェントを操作するための統合インターフェースを提供します。詳細については、Interactions API ガイドをご覧ください。
+Gemini Deep Research エージェントのプレビュー版をリリースしました。この機能は、複数ステップのリサーチ タスクの計画、実行、結果の合成を自律</description>
+    </item>
+    <item>
+      <title>XServer Drive: 「Amazonギフトカード 20,000円分」「REGZA 液晶テレビ」など豪華賞品が当たる！「春をもっと楽しむ！選べるプレゼントキャンペーン2026」</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17796</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17796</guid>
+      <pubDate>2026/03/10</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 【報酬・割引率が2倍に！】「お友達紹介プログラム」「ご契約者さま限定割引」において「紹介特典2倍キャンペーン」を実施中</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17678</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17678</guid>
+      <pubDate>2026/02/16</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 《4/15まで》法人向けクラウドストレージの利用料金が実質月額1,485円から！半額キャッシュバックキャンペーン</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17591</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17591</guid>
+      <pubDate>2026/02/02</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 令和8年1月21日からの大雪に係る災害により被災されたお客様への特別措置に関するお知らせ（2026年2月6日 追記）</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17579</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17579</guid>
+      <pubDate>2026/01/30</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: HTTPS通信における旧式の暗号スイートの提供終了について</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17535</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17535</guid>
+      <pubDate>2026/01/26</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: XServerアカウント利用規約改定のお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17510</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17510</guid>
+      <pubDate>2026/01/21</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 《2/2まで延長》今なら初期費用が0円！初期費用無料キャンペーン</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17420</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17420</guid>
+      <pubDate>2026/01/09</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 《最大10口までご応募可能！》「Amazonギフトカード30,000円分」「ASUS ノートPC」など豪華賞品が当たる！「新春！お年玉プレゼントキャンペーン2026」</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17351</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17351</guid>
+      <pubDate>2025/12/26</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 「お友達紹介プログラム」「ご契約者さま限定割引」の対象サービスにWordPress専用ホスティング『XServer for WordPress』追加のお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17253</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17253</guid>
+      <pubDate>2025/12/17</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 令和7年青森県東方沖を震源とする地震に伴う災害により被災されたお客様への特別措置に関するお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17186</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17186</guid>
+      <pubDate>2025/12/09</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 年末年始の営業についてのお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17156</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17156</guid>
+      <pubDate>2025/12/05</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 未契約サービスの初回利用料金が最大20％オフ！「ご契約者さま限定割引」提供開始のお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17117</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17117</guid>
+      <pubDate>2025/12/01</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 令和7年11月18日大分市佐賀関の大規模火災に伴う災害により被災されたお客様への特別措置に関するお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=17023</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=17023</guid>
+      <pubDate>2025/11/19</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 《1/14まで》今なら初期費用が0円！初期費用無料キャンペーン</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=16954</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=16954</guid>
+      <pubDate>2025/11/10</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 「サーバーパネル」から「コントロールパネル」へ名称変更のお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=16687</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=16687</guid>
+      <pubDate>2025/10/14</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 令和7年台風第22号に伴う災害により被災されたお客様への特別措置に関するお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=16674</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=16674</guid>
+      <pubDate>2025/10/09</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 「個人情報の取り扱いについて」の改定ならびに同意のお願い</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=16612</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=16612</guid>
+      <pubDate>2025/10/01</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 『XServerドライブ』サービスサイト リニューアルのお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=16567</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=16567</guid>
+      <pubDate>2025/09/24</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: 令和7年9月12日からの大雨に伴う災害により被災されたお客様への特別措置に関するお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=16455</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=16455</guid>
+      <pubDate>2025/09/13</pubDate>
+      
+    </item>
+    <item>
+      <title>XServer Drive: プリペイドの払い戻しに関する利用規約改定のお知らせ</title>
+      <link>https://drive.xserver.ne.jp/news/detail.php?view_id=16450</link>
+      <guid isPermaLink="true">https://drive.xserver.ne.jp/news/detail.php?view_id=16450</guid>
+      <pubDate>2025/09/12</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2602</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>最新チャネル</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2602*</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>月次エンタープライズ チャネル</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2512</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>月次エンタープライズ チャネル</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2511</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>月次エンタープライズ チャネル</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2508</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>半期エンタープライズ チャネル</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 3 月 10 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 3 月 3 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2 月 24 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2 月 17 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2 月 10 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 2 月 3 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 1 月 27 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 1 月 21 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 1 月 13 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 1 月 8 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2026</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 12 月 16 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2025</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 12 月 9 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2025</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 12 月 3 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2025</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 11 月 20 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2025</pubDate>
+      
+    </item>
+    <item>
+      <title>M365: 11 月 18 日</title>
+      <link>https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</link>
+      <guid isPermaLink="true">https://learn.microsoft.com/ja-jp/officeupdates/update-history-microsoft365-apps-by-date</guid>
+      <pubDate>2025</pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: はじめに</title>
+      <link>https://cybozu.dev/ja/kintone/getting-started/what-is-kintone-customize</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/kintone/getting-started/what-is-kintone-customize</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: kintone</title>
+      <link>https://cybozu.dev/ja/kintone/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/kintone/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: REST API</title>
+      <link>https://cybozu.dev/ja/kintone/docs/rest-api/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/kintone/docs/rest-api/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: JavaScript API</title>
+      <link>https://cybozu.dev/ja/kintone/docs/js-api/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/kintone/docs/js-api/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: カスタマイズ</title>
+      <link>https://cybozu.dev/ja/kintone/tips/development/customize/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/kintone/tips/development/customize/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: 外部連携</title>
+      <link>https://cybozu.dev/ja/kintone/tips/development/3rd-party-services/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/kintone/tips/development/3rd-party-services/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: kintoneプラグイン</title>
+      <link>https://cybozu.dev/ja/kintone/tips/development/plugins/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/kintone/tips/development/plugins/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: Garoon</title>
+      <link>https://cybozu.dev/ja/garoon/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/garoon/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: REST API</title>
+      <link>https://cybozu.dev/ja/garoon/docs/rest-api/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/garoon/docs/rest-api/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: JavaScript API</title>
+      <link>https://cybozu.dev/ja/garoon/docs/js-api/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/garoon/docs/js-api/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: SOAP API</title>
+      <link>https://cybozu.dev/ja/garoon/docs/soap-api/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/garoon/docs/soap-api/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: カスタマイズ</title>
+      <link>https://cybozu.dev/ja/garoon/tips/customize/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/garoon/tips/customize/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: 外部連携</title>
+      <link>https://cybozu.dev/ja/garoon/tips/3rd-party-services/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/garoon/tips/3rd-party-services/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: cybozu.com共通管理</title>
+      <link>https://cybozu.dev/ja/common/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/common/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: OAuthクライアント</title>
+      <link>https://cybozu.dev/ja/common/docs/oauth-client/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/common/docs/oauth-client/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: User API</title>
+      <link>https://cybozu.dev/ja/common/docs/user-api/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/common/docs/user-api/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: ユーザー</title>
+      <link>https://cybozu.dev/ja/common/tips/users/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/common/tips/users/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: 認証</title>
+      <link>https://cybozu.dev/ja/common/tips/authentication/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/common/tips/authentication/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: チュートリアル</title>
+      <link>https://cybozu.dev/ja/tutorials/</link>
+      <guid isPermaLink="true">https://cybozu.dev/ja/tutorials/</guid>
+      <pubDate></pubDate>
+      
+    </item>
+    <item>
+      <title>cybozu.dev: devCamp</title>
+      <link>https://page.cybozu.co.jp/-/devcamp/</link>
+      <guid isPermaLink="true">https://page.cybozu.co.jp/-/devcamp/</guid>
+      <pubDate></pubDate>
+      
+    </item>
   </channel>
 </rss>
