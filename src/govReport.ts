@@ -43,8 +43,16 @@ async function callGemini(
   // groundingChunksからURLとタイトルを取得
   const chunks: { web?: { uri: string; title: string } }[] =
     response.data?.candidates?.[0]?.groundingMetadata?.groundingChunks ?? [];
+
+  // groundingSupportsで実際にテキスト中で使われたchunkのindexを取得
+  const supports: { groundingChunkIndices?: number[] }[] =
+    response.data?.candidates?.[0]?.groundingMetadata?.groundingSupports ?? [];
+  const usedIndices = new Set(
+    supports.flatMap((s) => s.groundingChunkIndices ?? []),
+  );
+
   const sourceUrls = chunks
-    .filter((c) => c.web?.uri)
+    .filter((_, i) => usedIndices.has(i) && chunks[i].web?.uri)
     .map((c) => ({ title: c.web!.title ?? '', uri: c.web!.uri }));
 
   return { text, sourceUrls };
