@@ -2,9 +2,11 @@ name: Generate RSS Feed
 
 on:
   schedule:
-    # 6時間おきに実行（UTC: 0/6/12/18時 = JST 9/15/21/3時）
     - cron: '0 0,6,12,18 * * *'
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   generate:

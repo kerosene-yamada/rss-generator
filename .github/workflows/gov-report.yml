@@ -2,9 +2,7 @@ name: Gov Report to Slack
 
 on:
   schedule:
-    # 障害児通所支援: 毎週月曜 JST 6:00 = 日曜 UTC 21:00
     - cron: '0 21 * * 0'
-    # あん摩マッサージ: 毎週水曜 JST 6:00 = 火曜 UTC 21:00
     - cron: '0 21 * * 2'
   workflow_dispatch:
     inputs:
@@ -16,6 +14,9 @@ on:
         options:
           - shougaiji
           - ahaki
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   report:
@@ -31,14 +32,13 @@ jobs:
 
       - run: npm ci
 
-      # cronトリガーの場合、曜日でターゲットを自動判定
       - name: Determine report target
         id: target
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "target=${{ inputs.target }}" >> $GITHUB_OUTPUT
           else
-            DOW=$(date -u +%w)  # 0=日曜, 2=火曜
+            DOW=$(date -u +%w)
             if [ "$DOW" = "0" ]; then
               echo "target=shougaiji" >> $GITHUB_OUTPUT
             else
