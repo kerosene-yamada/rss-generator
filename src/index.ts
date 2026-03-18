@@ -22,6 +22,12 @@ async function fetchAndScrapeWithLogin(
   try {
     console.log(`Fetching (with login): ${site.name}`);
 
+    // 認証情報が空の場合は早期エラー
+    if (!credentials.username || !credentials.password) {
+      console.error(`  Error: HUG_USER / HUG_PASS が設定されていません`);
+      return [];
+    }
+
     const loginRes = await axios.post(
       site.loginUrl,
       new URLSearchParams(credentials),
@@ -35,9 +41,20 @@ async function fetchAndScrapeWithLogin(
       },
     );
 
+    console.log(`  Login status: ${loginRes.status}`);
+
     const rawCookies: string[] =
       (loginRes.headers['set-cookie'] as string[]) ?? [];
     const cookieStr = rawCookies.map((c: string) => c.split(';')[0]).join('; ');
+
+    if (!cookieStr) {
+      console.error(
+        `  Error: ログイン後にCookieが取得できませんでした（認証情報を確認してください）`,
+      );
+      return [];
+    }
+
+    console.log(`  Cookie acquired, fetching: ${site.url}`);
 
     const res = await axios.get(site.url, {
       headers: {
@@ -48,6 +65,15 @@ async function fetchAndScrapeWithLogin(
     });
 
     const html = Buffer.from(res.data).toString('utf-8');
+
+    // ログインページにリダイレクトされていたら認証失敗
+    if (html.includes('name="username"') || html.includes('name="password"')) {
+      console.error(
+        `  Error: ログインに失敗しました（ログインページにリダイレクトされました）`,
+      );
+      return [];
+    }
+
     const items = site.scraper(html, site.url);
     console.log(`  -> Found ${items.length} items`);
     return items;

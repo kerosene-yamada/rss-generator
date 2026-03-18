@@ -1,4 +1,4 @@
-import { FeedItem } from './types';
+import {FeedItem} from './types';
 
 // XML特殊文字をエスケープ
 function escapeXml(str: string): string {
@@ -10,7 +10,22 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
-export function generateRss(items: FeedItem[], feedTitle: string, feedUrl: string): string {
+// 日付文字列をRFC 822形式に変換（Slack等のRSSパーサー対応）
+function toRfc822(dateStr: string): string {
+  // "2026年03月18日" → Date に変換
+  const normalized = dateStr.replace(
+    /(\d{4})年(\d{1,2})月(\d{1,2})日/,
+    '$1-$2-$3',
+  );
+  const d = new Date(normalized);
+  return isNaN(d.getTime()) ? new Date().toUTCString() : d.toUTCString();
+}
+
+export function generateRss(
+  items: FeedItem[],
+  feedTitle: string,
+  feedUrl: string,
+): string {
   const now = new Date().toUTCString();
 
   const itemsXml = items
@@ -20,9 +35,9 @@ export function generateRss(items: FeedItem[], feedTitle: string, feedUrl: strin
       <title>${escapeXml(item.title)}</title>
       <link>${escapeXml(item.link)}</link>
       <guid isPermaLink="true">${escapeXml(item.link)}</guid>
-      <pubDate>${item.date}</pubDate>
+      <pubDate>${toRfc822(item.date)}</pubDate>
       ${item.description ? `<description>${escapeXml(item.description)}</description>` : ''}
-    </item>`
+    </item>`,
     )
     .join('');
 
