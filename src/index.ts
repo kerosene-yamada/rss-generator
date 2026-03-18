@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as path from 'path';
 import {geminiSites, hugCopainSite} from './scrapers';
@@ -28,9 +29,10 @@ async function fetchAndScrapeWithLogin(
       return [];
     }
 
-    // Step1: GETでセッションCookieを取得
+    // Step1: GETでセッションCookieと隠しフォームフィールドを取得
     const getRes = await axios.get(site.loginUrl, {
       headers: {'User-Agent': axiosConfig.headers['User-Agent']},
+      responseType: 'arraybuffer' as const,
       validateStatus: (status) => status < 400,
     });
     const initCookies: string[] =
@@ -40,21 +42,35 @@ async function fetchAndScrapeWithLogin(
       .join('; ');
     console.log(`  Session cookie: ${initCookieStr || '(none)'}`);
 
-    // Step2: セッションCookieを引き継いでPOSTログイン
-    const loginRes = await axios.post(
-      site.loginUrl,
-      new URLSearchParams(credentials),
-      {
-        headers: {
-          'User-Agent': axiosConfig.headers['User-Agent'],
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Referer: site.loginUrl,
-          ...(initCookieStr ? {Cookie: initCookieStr} : {}),
-        },
-        maxRedirects: 5,
-        validateStatus: (status) => status < 400,
+    // ログインフォームの隠しフィールド（CSRFトークン等）を取得
+    const loginHtml = Buffer.from(getRes.data).toString('utf-8');
+    const $form = cheerio.load(loginHtml);
+    const hiddenFields: Record<string, string> = {};
+    $form('form input[type="hidden"]').each(
+      (_: unknown, el: cheerio.Element) => {
+        const name = $form(el).attr('name');
+        const value = $form(el).attr('value') ?? '';
+        if (name) hiddenFields[name] = value;
       },
     );
+    if (Object.keys(hiddenFields).length > 0) {
+      console.log(
+        `  Hidden fields found: ${Object.keys(hiddenFields).join(', ')}`,
+      );
+    }
+
+    // Step2: 隠しフィールド＋認証情報でPOSTログイン
+    const postData = new URLSearchParams({...hiddenFields, ...credentials});
+    const loginRes = await axios.post(site.loginUrl, postData, {
+      headers: {
+        'User-Agent': axiosConfig.headers['User-Agent'],
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Referer: site.loginUrl,
+        ...(initCookieStr ? {Cookie: initCookieStr} : {}),
+      },
+      maxRedirects: 0,
+      validateStatus: (status) => status < 400,
+    });
 
     console.log(`  Login status: ${loginRes.status}`);
 
@@ -76,8 +92,20 @@ async function fetchAndScrapeWithLogin(
       return [];
     }
 
-    console.log(`  Cookie acquired, fetching: ${site.url}`);
+    // ログイン成功後にリダイレクト先URLを追跡
+    const redirectUrl = loginRes.headers['location']
+      ? new URL(loginRes.headers['location'] as string, site.loginUrl).href
+      : null;
+    if (redirectUrl) {
+      console.log(`  Login redirect -> ${redirectUrl}`);
+      await axios.get(redirectUrl, {
+        headers: {...axiosConfig.headers, Cookie: cookieStr},
+        maxRedirects: 3,
+        validateStatus: (status) => status < 400,
+      });
+    }
 
+    console.log(`  Cookie acquired, fetching: ${site.url}`);
     const res = await axios.get(site.url, {
       headers: {
         ...axiosConfig.headers,
