@@ -46,13 +46,11 @@ async function fetchAndScrapeWithLogin(
     const loginHtml = Buffer.from(getRes.data).toString('utf-8');
     const $form = cheerio.load(loginHtml);
     const hiddenFields: Record<string, string> = {};
-    $form('form input[type="hidden"]').each(
-      (_: unknown, el: cheerio.Element) => {
-        const name = $form(el).attr('name');
-        const value = $form(el).attr('value') ?? '';
-        if (name) hiddenFields[name] = value;
-      },
-    );
+    $form('form input[type="hidden"]').each((_: unknown, el: any) => {
+      const name = $form(el).attr('name');
+      const value = $form(el).attr('value') ?? '';
+      if (name) hiddenFields[name] = value;
+    });
     if (Object.keys(hiddenFields).length > 0) {
       console.log(
         `  Hidden fields found: ${Object.keys(hiddenFields).join(', ')}`,
