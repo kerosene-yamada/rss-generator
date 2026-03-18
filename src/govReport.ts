@@ -16,7 +16,12 @@ const PROMPTS: Record<string, { label: string; emoji: string; text: string }> = 
   },
 };
 
-async function callGemini(prompt: string, apiKey: string): Promise<string> {
+interface GeminiResult {
+  text: string;
+  sourceUrls: { title: string; uri: string }[];
+}
+
+async function callGemini(prompt: string, apiKey: string): Promise<GeminiResult> {
   const body = {
     contents: [{ parts: [{ text: prompt }], role: 'user' }],
     tools: [{ google_search: {} }],
@@ -29,10 +34,19 @@ async function callGemini(prompt: string, apiKey: string): Promise<string> {
   });
 
   const parts = response.data?.candidates?.[0]?.content?.parts ?? [];
-  return parts
+  const text = parts
     .filter((p: { text?: string }) => p.text)
     .map((p: { text: string }) => p.text)
     .join('');
+
+  // groundingChunksからURLとタイトルを取得
+  const chunks: { web?: { uri: string; title: string } }[] =
+    response.data?.candidates?.[0]?.groundingMetadata?.groundingChunks ?? [];
+  const sourceUrls = chunks
+    .filter((c) => c.web?.uri)
+    .map((c) => ({ title: c.web!.title ?? '', uri: c.web!.uri }));
+
+  return { text, sourceUrls };
 }
 
 async function postToSlack(text: string, webhookUrl: string): Promise<void> {
@@ -49,10 +63,14 @@ function markdownToSlack(text: string): string {
     // 太字 **text** / __text__ → *text*
     .replace(/\*\*(.+?)\*\*/g, '*$1*')
     .replace(/__(.+?)__/g, '*$1*')
-    // リンク [text](url) → <url|text>
-    .replace(/\[(.+?)\]\((.+?)\)/g, '<$2|$1>')
+    // リンク: テキストとURLが同じ場合 [https://...](https://...) → URLそのまま
+    .replace(/\[((https?:\/\/[^\]]+))\]\(\1\)/g, '$1')
+    // リンク: テキストとURLが異なる場合 [text](url) → text（URL付き）: url
+    .replace(/\[(.+?)\]\((https?:\/\/[^)]+)\)/g, '$1: $2')
     // 水平線 → 空行
     .replace(/^[-*_]{3,}$/gm, '')
+    // 絵文字を削除
+    .replace(/[\u{1F000}-\u{1FFFF}]|[\u{2600}-\u{27BF}]|[\u{FE00}-\u{FEFF}]/gu, '')
     // 連続空行を最大2行に整理
     .replace(/\n{3,}/g, '\n\n')
     .trim();
@@ -94,10 +112,20 @@ export async function runGovReport(): Promise<void> {
   console.log(`Generating report: ${prompt.label}`);
 
   try {
-    const rawReport = await callGemini(prompt.text, apiKey);
-    const report = markdownToSlack(rawReport);
-    const header = `${prompt.emoji} *${prompt.label}*\n📅 ${today}\n${'─'.repeat(40)}\n`;
-    const chunks = splitMessage(header + report);
+    const result = await callGemini(prompt.text, apiKey);
+    const report = markdownToSlack(result.text);
+
+    // 参照元URLを末尾に追記
+    let sourceSection = '';
+    if (result.sourceUrls.length > 0) {
+      const urlLines = result.sourceUrls
+        .map((s) => `・${s.title ? s.title + ': ' : ''}${s.uri}`)
+        .join('\n');
+      sourceSection = `\n\n${'─'.repeat(40)}\n*参照元*\n${urlLines}`;
+    }
+
+    const header = `*${prompt.label}*\n${today}\n${'─'.repeat(40)}\n`;
+    const chunks = splitMessage(header + report + sourceSection);
 
     for (let i = 0; i < chunks.length; i++) {
       const suffix = chunks.length > 1 ? `\n_(${i + 1}/${chunks.length})_` : '';
