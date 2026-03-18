@@ -34,7 +34,7 @@ export function generateRss(
     <item>
       <title>${escapeXml(item.title)}</title>
       <link>${escapeXml(item.link)}</link>
-      <guid isPermaLink="true">${escapeXml(item.link)}</guid>
+      <guid isPermaLink="false">${escapeXml(item.guid ?? item.link)}</guid>
       <pubDate>${toRfc822(item.date)}</pubDate>
       ${item.description ? `<description>${escapeXml(item.description)}</description>` : ''}
     </item>`,

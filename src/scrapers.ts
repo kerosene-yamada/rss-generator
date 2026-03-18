@@ -17,6 +17,7 @@ export const geminiSites: SiteConfig[] = [
         items.push({
           title: `Gemini API: ${title}`,
           link: baseUrl,
+          guid: `${baseUrl}#${title.replace(/\s+/g, '-')}`,
           date: title,
           description,
         });
@@ -49,9 +50,12 @@ export const hugCopainSite: LoginSiteConfig = {
       const description = td.text().trim().replace(/\s+/g, ' ').slice(0, 300);
 
       if (date && version) {
+        // バージョン+日付でユニークなguidを生成
+        const guid = `${baseUrl}#${version}-${date.replace(/[年月日\s]/g, '-')}`;
         items.push({
           title: `${version} (${date})`,
           link: baseUrl,
+          guid,
           date,
           description,
         });
