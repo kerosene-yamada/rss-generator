@@ -1,10 +1,10 @@
 import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
-import { geminiSites, xserverSites } from './scrapers';
-import { generateRss } from './rssGenerator';
-import { FeedItem, SiteConfig } from './types';
-import { runGovReport } from './govReport';
+import {geminiSites, hugCopainSite} from './scrapers';
+import {generateRss} from './rssGenerator';
+import {FeedItem, SiteConfig, LoginSiteConfig} from './types';
+import {runGovReport} from './govReport';
 
 const axiosConfig = {
   headers: {
@@ -15,6 +15,50 @@ const axiosConfig = {
   responseType: 'arraybuffer' as const,
 };
 
+async function fetchAndScrapeWithLogin(
+  site: LoginSiteConfig,
+  credentials: Record<string, string>,
+): Promise<FeedItem[]> {
+  try {
+    console.log(`Fetching (with login): ${site.name}`);
+
+    const loginRes = await axios.post(
+      site.loginUrl,
+      new URLSearchParams(credentials),
+      {
+        headers: {
+          'User-Agent': axiosConfig.headers['User-Agent'],
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        maxRedirects: 0,
+        validateStatus: (status) => status < 400,
+      },
+    );
+
+    const rawCookies: string[] =
+      (loginRes.headers['set-cookie'] as string[]) ?? [];
+    const cookieStr = rawCookies.map((c: string) => c.split(';')[0]).join('; ');
+
+    const res = await axios.get(site.url, {
+      headers: {
+        ...axiosConfig.headers,
+        Cookie: cookieStr,
+      },
+      responseType: 'arraybuffer' as const,
+    });
+
+    const html = Buffer.from(res.data).toString('utf-8');
+    const items = site.scraper(html, site.url);
+    console.log(`  -> Found ${items.length} items`);
+    return items;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`  Error fetching ${site.name}: ${error.message}`);
+    }
+    return [];
+  }
+}
+
 async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
   const allItems: FeedItem[] = [];
 
@@ -23,17 +67,7 @@ async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
       console.log(`Fetching: ${site.name}`);
       const response = await axios.get(site.url, axiosConfig);
 
-      let html: string;
-      if (site.url.includes('xserver')) {
-        const iconv = await import('iconv-lite').catch(() => null);
-        if (iconv) {
-          html = iconv.decode(Buffer.from(response.data), 'EUC-JP');
-        } else {
-          html = Buffer.from(response.data).toString('utf-8');
-        }
-      } else {
-        html = Buffer.from(response.data).toString('utf-8');
-      }
+      const html = Buffer.from(response.data).toString('utf-8');
 
       const items = site.scraper(html, site.url);
       console.log(`  -> Found ${items.length} items`);
@@ -60,7 +94,7 @@ async function main(): Promise<void> {
   console.log('Mode: rss');
   const outputDir = path.join(process.cwd(), 'docs');
   if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+    fs.mkdirSync(outputDir, {recursive: true});
   }
 
   // Gemini APIフィード
@@ -77,19 +111,22 @@ async function main(): Promise<void> {
   );
   console.log('Written: docs/gemini-feed.xml');
 
-  // XServer Driveフィード
-  const xserverItems = await fetchAndScrape(xserverSites);
-  console.log(`XServer items: ${xserverItems.length}`);
+  // HUG リリースノートフィード
+  const hugItems = await fetchAndScrapeWithLogin(hugCopainSite, {
+    username: process.env.HUG_USER ?? '',
+    password: process.env.HUG_PASS ?? '',
+  });
+  console.log(`HUG items: ${hugItems.length}`);
   fs.writeFileSync(
-    path.join(outputDir, 'xserver-feed.xml'),
+    path.join(outputDir, 'hug-feed.xml'),
     generateRss(
-      xserverItems,
-      'XServer Drive 障害・メンテナンス情報',
-      'https://kerosene-yamada.github.io/rss-generator/xserver-feed.xml',
+      hugItems,
+      'HUG リリースノート',
+      'https://kerosene-yamada.github.io/rss-generator/hug-feed.xml',
     ),
     'utf-8',
   );
-  console.log('Written: docs/xserver-feed.xml');
+  console.log('Written: docs/hug-feed.xml');
 }
 
 main().catch((err) => {

@@ -2,11 +2,11 @@ name: Generate RSS Feed
 
 on:
   schedule:
-    - cron: '0 0,6,12,18 * * *'
+    - cron: '0 3,21 * * *'
   workflow_dispatch:
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
   generate:
@@ -28,11 +28,13 @@ jobs:
         run: npx ts-node src/index.ts
         env:
           RUN_MODE: rss
+          HUG_USER: ${{ secrets.HUG_USER }}
+          HUG_PASS: ${{ secrets.HUG_PASS }}
 
       - name: Commit and push feeds
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
-          git add docs/gemini-feed.xml docs/xserver-feed.xml
+          git add docs/gemini-feed.xml docs/hug-feed.xml
           git diff --staged --quiet || git commit -m "chore: update RSS feeds [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           git push

@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import { FeedItem, SiteConfig } from './types';
+import {FeedItem, SiteConfig, LoginSiteConfig} from './types';
 
 export const geminiSites: SiteConfig[] = [
   {
@@ -27,28 +27,37 @@ export const geminiSites: SiteConfig[] = [
   },
 ];
 
-export const xserverSites: SiteConfig[] = [
-  {
-    name: 'XServer Drive 障害・メンテナンス情報',
-    url: 'https://drive.xserver.ne.jp/support/information/',
-    scraper: (html, baseUrl) => {
-      const $ = cheerio.load(html);
-      const items: FeedItem[] = [];
+export const hugCopainSite: LoginSiteConfig = {
+  name: 'HUG リリースノート',
+  loginUrl: 'https://www.hug-copain-sakura-be.link/hug/wm/',
+  url: 'https://www.hug-copain-sakura-be.link/hug/wm/release_note.php',
+  scraper: (html, baseUrl) => {
+    const $ = cheerio.load(html);
+    const items: FeedItem[] = [];
 
-      $('dt').each((_, el) => {
-        const date = $(el).text().trim();
-        const dd = $(el).next('dd');
-        dd.find('a').each((_, link) => {
-          const title = $(link).text().trim();
-          const href = $(link).attr('href') || '';
-          const fullUrl = href.startsWith('http') ? href : `https://drive.xserver.ne.jp${href}`;
-          if (title) {
-            items.push({ title: `XServer Drive 障害: ${title}`, link: fullUrl, date });
-          }
+    $('table.table_release_note tr').each((_, tr) => {
+      const meta = $(tr).find('ul.releaseMeta');
+      if (!meta.length) return;
+
+      const lis = meta.find('li');
+      const date = lis.eq(0).text().trim();
+      const version = lis.eq(1).text().trim();
+
+      // ul.releaseMeta を除いた td のテキストを説明文として取得
+      const td = $(tr).find('td');
+      meta.remove();
+      const description = td.text().trim().replace(/\s+/g, ' ').slice(0, 300);
+
+      if (date && version) {
+        items.push({
+          title: `${version} (${date})`,
+          link: baseUrl,
+          date,
+          description,
         });
-      });
+      }
+    });
 
-      return items.slice(0, 20);
-    },
+    return items.slice(0, 20);
   },
-];
+};
