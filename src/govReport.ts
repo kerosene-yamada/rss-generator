@@ -3,19 +3,18 @@ import axios from 'axios';
 const GEMINI_API_URL =
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
-const PROMPTS: Record<string, { label: string; emoji: string; text: string }> =
-  {
-    shougaiji: {
-      label: '障害児通所支援 最新動向レポート',
-      emoji: '🧒',
-      text: `障害児通所支援事業における報酬改定や制度・運営に関する最新動向について、厚生労働省およびこども家庭庁等が公開する検討会・審議会の議事録・報告書・公式通知・資料から、新着情報があればまとめてレポートしてください。特に令和9年度の改定の重要事項や検討中論点、現場運営に関係するトピックスを重点的に整理し、各情報の出典（公式発表ページURL、資料名）も明記してください。`,
-    },
-    ahaki: {
-      label: 'あん摩マッサージ 最新動向レポート',
-      emoji: '💆',
-      text: `あん摩マッサージにおける報酬改定や制度・運営に関する最新動向について、厚生労働省等が公開する検討会・審議会の議事録・報告書・公式通知・資料から、新着情報があればまとめてレポートしてください。特に令和8年度の改定の重要事項や検討中論点、現場運営に関係するトピックスを重点的に整理し、各情報の出典（公式発表ページURL、資料名）も明記してください。`,
-    },
-  };
+const PROMPTS: Record<string, { label: string; emoji: string; text: string }> = {
+  shougaiji: {
+    label: '障害児通所支援 最新動向レポート',
+    emoji: '🧒',
+    text: `障害児通所支援事業における報酬改定や制度・運営に関する最新動向について、厚生労働省およびこども家庭庁等が公開する検討会・審議会の議事録・報告書・公式通知・資料から、新着情報があればまとめてレポートしてください。特に令和9年度の改定の重要事項や検討中論点、現場運営に関係するトピックスを重点的に整理し、各情報の出典（公式発表ページURL、資料名）も明記してください。`,
+  },
+  ahaki: {
+    label: 'あん摩マッサージ 最新動向レポート',
+    emoji: '💆',
+    text: `あん摩マッサージにおける報酬改定や制度・運営に関する最新動向について、厚生労働省等が公開する検討会・審議会の議事録・報告書・公式通知・資料から、新着情報があればまとめてレポートしてください。特に令和8年度の改定の重要事項や検討中論点、現場運営に関係するトピックスを重点的に整理し、各情報の出典（公式発表ページURL、資料名）も明記してください。`,
+  },
+};
 
 async function callGemini(prompt: string, apiKey: string): Promise<string> {
   const body = {
@@ -37,14 +36,26 @@ async function callGemini(prompt: string, apiKey: string): Promise<string> {
 }
 
 async function postToSlack(text: string, webhookUrl: string): Promise<void> {
-  await axios.post(
-    webhookUrl,
-    { text },
-    {
-      headers: { 'Content-Type': 'application/json' },
-      timeout: 10000,
-    },
-  );
+  await axios.post(webhookUrl, { text }, {
+    headers: { 'Content-Type': 'application/json' },
+    timeout: 10000,
+  });
+}
+
+function markdownToSlack(text: string): string {
+  return text
+    // 見出し h1〜h6 → 太字
+    .replace(/^#{1,6}\s+(.+)$/gm, '*$1*')
+    // 太字 **text** / __text__ → *text*
+    .replace(/\*\*(.+?)\*\*/g, '*$1*')
+    .replace(/__(.+?)__/g, '*$1*')
+    // リンク [text](url) → <url|text>
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<$2|$1>')
+    // 水平線 → 空行
+    .replace(/^[-*_]{3,}$/gm, '')
+    // 連続空行を最大2行に整理
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 function splitMessage(text: string, maxLen = 2800): string[] {
@@ -72,23 +83,19 @@ export async function runGovReport(): Promise<void> {
   if (!apiKey) throw new Error('GEMINI_API_KEY が設定されていません');
   if (!webhookUrl) throw new Error('SLACK_WEBHOOK_URL が設定されていません');
   if (!target || !(target in PROMPTS)) {
-    throw new Error(
-      `REPORT_TARGET は "shougaiji" または "ahaki" を指定してください`,
-    );
+    throw new Error(`REPORT_TARGET は "shougaiji" または "ahaki" を指定してください`);
   }
 
   const prompt = PROMPTS[target];
   const today = new Date().toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'Asia/Tokyo',
+    year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Tokyo',
   });
 
   console.log(`Generating report: ${prompt.label}`);
 
   try {
-    const report = await callGemini(prompt.text, apiKey);
+    const rawReport = await callGemini(prompt.text, apiKey);
+    const report = markdownToSlack(rawReport);
     const header = `${prompt.emoji} *${prompt.label}*\n📅 ${today}\n${'─'.repeat(40)}\n`;
     const chunks = splitMessage(header + report);
 
@@ -104,7 +111,7 @@ export async function runGovReport(): Promise<void> {
       console.error(`  Error: ${error.message}`);
       await postToSlack(
         `⚠️ *${prompt.label}* のレポート生成に失敗しました\n\`${error.message}\``,
-        webhookUrl,
+        webhookUrl
       ).catch(() => {});
     }
   }
