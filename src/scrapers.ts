@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import { FeedItem, SiteConfig } from './types';
 
-export const sites: SiteConfig[] = [
+export const geminiSites: SiteConfig[] = [
   {
     name: 'Gemini API リリースノート',
     url: 'https://ai.google.dev/gemini-api/docs/changelog?hl=ja',
@@ -25,7 +25,9 @@ export const sites: SiteConfig[] = [
       return items.slice(0, 20);
     },
   },
+];
 
+export const xserverSites: SiteConfig[] = [
   {
     name: 'XServer Drive 障害・メンテナンス情報',
     url: 'https://drive.xserver.ne.jp/support/information/',
@@ -39,15 +41,9 @@ export const sites: SiteConfig[] = [
         dd.find('a').each((_, link) => {
           const title = $(link).text().trim();
           const href = $(link).attr('href') || '';
-          const fullUrl = href.startsWith('http')
-            ? href
-            : `https://drive.xserver.ne.jp${href}`;
+          const fullUrl = href.startsWith('http') ? href : `https://drive.xserver.ne.jp${href}`;
           if (title) {
-            items.push({
-              title: `XServer Drive 障害: ${title}`,
-              link: fullUrl,
-              date,
-            });
+            items.push({ title: `XServer Drive 障害: ${title}`, link: fullUrl, date });
           }
         });
       });

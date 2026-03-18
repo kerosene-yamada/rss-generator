@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
-import { sites } from './scrapers';
+import { geminiSites, xserverSites } from './scrapers';
 import { generateRss } from './rssGenerator';
 import { FeedItem, SiteConfig } from './types';
 import { runGovReport } from './govReport';
@@ -49,33 +49,47 @@ async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
 }
 
 async function main(): Promise<void> {
-  // どのモードで実行するか環境変数で切り替え
-  // GitHub Actionsのワークフローから "rss" または "gov-report" を渡す
   const mode = process.env.RUN_MODE ?? 'rss';
 
   if (mode === 'gov-report') {
-    // 週1回：Gemini APIでレポート生成→Slack投稿
     console.log('Mode: gov-report');
     await runGovReport();
     return;
   }
 
-  // デフォルト: RSSフィード生成
   console.log('Mode: rss');
   const outputDir = path.join(process.cwd(), 'docs');
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  const items = await fetchAndScrape(sites);
-  console.log(`Total items: ${items.length}`);
-  const feedUrl = 'https://kerosene-yamada.github.io/rss-generator/feed.xml';
+  // Gemini APIフィード
+  const geminiItems = await fetchAndScrape(geminiSites);
+  console.log(`Gemini items: ${geminiItems.length}`);
   fs.writeFileSync(
-    path.join(outputDir, 'feed.xml'),
-    generateRss(items, 'リリースノート まとめ RSS', feedUrl),
+    path.join(outputDir, 'gemini-feed.xml'),
+    generateRss(
+      geminiItems,
+      'Gemini API リリースノート',
+      'https://kerosene-yamada.github.io/rss-generator/gemini-feed.xml',
+    ),
     'utf-8',
   );
-  console.log('Written: docs/feed.xml');
+  console.log('Written: docs/gemini-feed.xml');
+
+  // XServer Driveフィード
+  const xserverItems = await fetchAndScrape(xserverSites);
+  console.log(`XServer items: ${xserverItems.length}`);
+  fs.writeFileSync(
+    path.join(outputDir, 'xserver-feed.xml'),
+    generateRss(
+      xserverItems,
+      'XServer Drive 障害・メンテナンス情報',
+      'https://kerosene-yamada.github.io/rss-generator/xserver-feed.xml',
+    ),
+    'utf-8',
+  );
+  console.log('Written: docs/xserver-feed.xml');
 }
 
 main().catch((err) => {

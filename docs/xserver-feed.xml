@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>リリースノート まとめ RSS</title>
-    <link>https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml</link>
+    <title>XServer Drive 障害・メンテナンス情報</title>
+    <link>https://YOUR_USERNAME.github.io/YOUR_REPO/xserver-feed.xml</link>
     <description>複数サービスのリリースノート・お知らせをまとめたRSSフィード</description>
     <language>ja</language>
-    <lastBuildDate>Wed, 18 Mar 2026 12:18:44 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 14:26:06 GMT</lastBuildDate>
     
   </channel>
 </rss>
