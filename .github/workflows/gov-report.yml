@@ -1,0 +1,55 @@
+name: Gov Report to Slack
+
+on:
+  schedule:
+    # 障害児通所支援: 毎週月曜 JST 6:00 = 日曜 UTC 21:00
+    - cron: '0 21 * * 0'
+    # あん摩マッサージ: 毎週水曜 JST 6:00 = 火曜 UTC 21:00
+    - cron: '0 21 * * 2'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: '実行対象 (shougaiji / ahaki)'
+        required: true
+        default: 'shougaiji'
+        type: choice
+        options:
+          - shougaiji
+          - ahaki
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      # cronトリガーの場合、曜日でターゲットを自動判定
+      - name: Determine report target
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "target=${{ inputs.target }}" >> $GITHUB_OUTPUT
+          else
+            DOW=$(date -u +%w)  # 0=日曜, 2=火曜
+            if [ "$DOW" = "0" ]; then
+              echo "target=shougaiji" >> $GITHUB_OUTPUT
+            else
+              echo "target=ahaki" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Run gov report
+        run: npx ts-node src/index.ts
+        env:
+          RUN_MODE: gov-report
+          REPORT_TARGET: ${{ steps.target.outputs.target }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

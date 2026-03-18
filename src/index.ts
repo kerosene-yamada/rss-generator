@@ -2,9 +2,9 @@ import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import { sites } from './scrapers';
-import { govSites } from './govScrapers';
 import { generateRss } from './rssGenerator';
 import { FeedItem, SiteConfig } from './types';
+import { runGovReport } from './govReport';
 
 const axiosConfig = {
   headers: {
@@ -49,16 +49,26 @@ async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
 }
 
 async function main(): Promise<void> {
-  console.log('Starting RSS generation...');
+  // どのモードで実行するか環境変数で切り替え
+  // GitHub Actionsのワークフローから "rss" または "gov-report" を渡す
+  const mode = process.env.RUN_MODE ?? 'rss';
 
+  if (mode === 'gov-report') {
+    // 週1回：Gemini APIでレポート生成→Slack投稿
+    console.log('Mode: gov-report');
+    await runGovReport();
+    return;
+  }
+
+  // デフォルト: RSSフィード生成
+  console.log('Mode: rss');
   const outputDir = path.join(process.cwd(), 'docs');
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  // フィード1: サービス系リリースノート
   const items = await fetchAndScrape(sites);
-  console.log(`Total items (services): ${items.length}`);
+  console.log(`Total items: ${items.length}`);
   const feedUrl = 'https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml';
   fs.writeFileSync(
     path.join(outputDir, 'feed.xml'),
@@ -66,17 +76,6 @@ async function main(): Promise<void> {
     'utf-8'
   );
   console.log('Written: docs/feed.xml');
-
-  // フィード2: 政府・行政系
-  const govItems = await fetchAndScrape(govSites);
-  console.log(`Total items (gov): ${govItems.length}`);
-  const govFeedUrl = 'https://YOUR_USERNAME.github.io/YOUR_REPO/gov-feed.xml';
-  fs.writeFileSync(
-    path.join(outputDir, 'gov-feed.xml'),
-    generateRss(govItems, '行政施策・審議会 まとめ RSS', govFeedUrl),
-    'utf-8'
-  );
-  console.log('Written: docs/gov-feed.xml');
 }
 
 main().catch((err) => {
