@@ -5,7 +5,147 @@
     <link>https://kerosene-yamada.github.io/rss-generator/hug-feed.xml</link>
     <description>複数サービスのリリースノート・お知らせをまとめたRSSフィード</description>
     <language>ja</language>
-    <lastBuildDate>Wed, 18 Mar 2026 23:41:43 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 23:49:54 GMT</lastBuildDate>
     
+    <item>
+      <title>v14.28.1 (2026年03月18日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・個別支援計画にて、原案の内容が読み込まれない不具合を修正致しました。 ・マイページの実績記録票（令和６年４月より前）にて、デジタルサインを行った後にサイン画像が画面に反映されない不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.28.0 (2026年03月18日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・個別支援計画にて、別表を新規作成時に同じ計画内の別表をコピーできる機能を追加いたしました。 ・請求書、領収書、代理受領通知書にて、一度通知を送信した保護者に対して、自動的に通知送信チェックが入らないように機能修正いたしました。 ・共生型放課後等デイサービスにて、個別支援計画・モニタリングの作成者を任意のスタッフで指定できるようになりました。 ・児童情報にて、学校・保育所の在籍履歴を期間とともに時系列で複数登録・管理できる機能を追加いたしました。 ・国保連請求にて、専門的支援実施加算の自治体独自ルールが適用される施設においても、回数上限超過の警告エラーが請求確定前に表示されるようになりました。</description>
+    </item>
+    <item>
+      <title>v14.27.18 (2026年03月17日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Tue, 17 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・保護者情報画面にて、対象施設の編集権限のあるユーザーでログインしているのに、一部保護者の画面にて保護者情報編集ボタンが非活性になる不具合を修正いたしました。 ・モニタリング詳細画面にて、和暦の表示をなくした場合に出力したPDFの説明同意日と保護者氏名の間のスペースがなくなる不具合を修正いたしました。 ・保護者・児童情報の出力にて、施設を併用している児童の契約支給量が正しく出力されない不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.17 (2026年03月16日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・個別出席表画面にて、出席日より後の利用開始日の受給者証の加算内容が表示される不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.16 (2026年03月13日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Fri, 13 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・利用者負担上限額管理結果票のマイページ公開設定にて、再請求時に既に公開済みの結果票が非公開になる不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.15 (2026年03月12日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Thu, 12 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・国保連請求 帳票・CSV出力にて、特定条件下で児童指導員加配加算の算定回数が正しく出力されない不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.14 (2026年03月11日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・指導員マスタの職種登録にて、看護師免許保有者を「児童指導員」ではなく「機能訓練担当職員等」として登録し、基本人員として配置できるよう仕様を変更いたしました。 ・自治体助成分請求額情報管理にて、既に登録済の児童が再度登録できてしまう不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.13 (2026年03月10日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・マイページの利用者上限額管理結果票にて、特定条件下のデジタルサイン不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.12 (2026年03月09日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・モニタリング画面にて、契約支給量の無い児童エラーが表示された際のリンク間違いを修正致しました。</description>
+    </item>
+    <item>
+      <title>v14.27.11 (2026年03月06日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Fri, 06 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・指導員マスタの勤務記録実務経験証明書の出力にて、業務に従事した日数が正しく表示されない不具合を修正いたしました。 ・都型放課後等デイサービス利用者の個別支援計画にて、交付日が正しく表示されない不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.10 (2026年03月05日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・今日の利用者にて、キャンセル待ち児童一覧から重症心身障害児児童のキャンセル待ちを解除した際に送迎加算(重心)が連動されない不具合を修正いたしました。 ・鹿児島市独自請求対象の国保連請求 帳票・CSV出力にて、 放課後等デイサービスと保育所等訪問支援を併用している場合、放課後等デイサービスの調整後利用者負担額が正しく表示されない不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.9 (2026年03月04日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Wed, 04 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・個別支援計画原案にて、 操作オプションの児童名の並び順が正しく表示されない不具合を修正いたしました。 ・鹿児島市独自請求対象の国保連請求 帳票・CSV出力にて、 放課後等デイサービスと保育所等訪問支援を併用している場合、保育所等訪問支援の上限月額調整が正しく表示されない不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.8 (2026年03月03日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Tue, 03 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・国保連請求 帳票・CSV出力にて、 欠席時対応加算のエラーが複数施設分存在する場合、各施設名が表示されるよう修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.7 (2026年03月02日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 GMT</pubDate>
+      <description>・サービス提供記録・ケア記録・生活記録の登録にて、マイページ表示設定でサービス提供記録が未設定の場合でも、「保護者に通知する」を保存するとアプリ通知が送信されてしまう不具合を修正いたしました。 ・個別支援計画の一覧にて、操作オプションの児童名選択欄に一部の児童名が表示されない不具合を修正いたしました。 ・専門的支援計画にて、障害画面の担当スタッフの文字サイズを調整致しました。</description>
+    </item>
+    <item>
+      <title>v14.27.6 (2026年02月26日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Thu, 26 Feb 2026 00:00:00 GMT</pubDate>
+      <description>・利用者負担上限額管理結果票の登録にて、鹿児島市独自請求対象において以下の条件を満たす場合、事例2対象外となるように変更いたしました。 - 放デイと保訪を併用している - 上限管理結果が「3」かつ利用者負担額が「0円」</description>
+    </item>
+    <item>
+      <title>v14.27.5 (2026年02月25日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Wed, 25 Feb 2026 00:00:00 GMT</pubDate>
+      <description>・受給者証編集画面にて、新規児童登録時に給付決定期間、支給期間、適用期間をコピーアンドペーストできない不具合を修正いたしました。 ・保護者・児童情報の出力にて、給付支給量と契約支給量が正しく出力されない不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.4 (2026年02月24日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Tue, 24 Feb 2026 00:00:00 GMT</pubDate>
+      <description>・マイページの利用者上限額管理結果票にて、特定条件下のデジタルサイン不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.2 (2026年02月23日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Mon, 23 Feb 2026 00:00:00 GMT</pubDate>
+      <description>・サービス提供実績記録票にて、閲覧権限のユーザーアカウントであっても保護者等確認欄のデジタルサインを編集できてしまう不具合を修正いたしました。 ・マイページの専門的支援実施計画モニタリングにて、児童が利用停止中の場合でも説明同意日のデジタルサインが可能となっていた不具合を修正いたしました。 ・各種加算・議事録管理一覧画面の操作オプションにて、児童名を選択し、実施日開始を選択すると選択していた児童名が消えてしまう不具合を修正いたしました。</description>
+    </item>
+    <item>
+      <title>v14.27.1 (2026年02月18日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Wed, 18 Feb 2026 00:00:00 GMT</pubDate>
+      <description>・利用者負担上限額管理結果票の印刷・出力画面にて、帳票フォーマットが正しく表示されない不具合を修正いたしました。 ・個別支援計画（原案）の編集画面・新規作成画面にて、「交付日」が表示される不具合を修正いたしました。 ・サービス提供記録・ケア記録・生活記録にて、コメント、ケア記録・生活記録項目の保存ができない不具合を修正いたしました。 ・体制等状況管理にて、種別を「共生型放課後等デイサービス」にした際に、「入室の記録と個別サポート加算(Ⅰ)の記録を連動する」項目を表示できるように修正いたしました。 ・体制等状況管理にて、「入室の記録と個別サポート加算(Ⅰ)の記録を連動する」項目の➁を選択していて</description>
+    </item>
+    <item>
+      <title>v14.27.0 (2026年02月17日)</title>
+      <link>https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</link>
+      <guid isPermaLink="true">https://www.hug-copain-sakura-be.link/hug/wm/release_note.php</guid>
+      <pubDate>Tue, 17 Feb 2026 00:00:00 GMT</pubDate>
+      <description>・実費負担実績表にて、月額実費の登録ができる機能を追加いたしました。 ・アプリ予約通知機能にて、児童の利用停止や情報削除等の状態変化に伴い、自動で通知がキャンセルされるようにいたしました。 ・個別支援計画にて、「交付日」を登録および表示されるよう機能を追加いたしました。 ・会社情報管理の変更画面・初期設定の基本情報の入力画面にて、「受付時間」の必須設定を解除いたしました。</description>
+    </item>
   </channel>
 </rss>
