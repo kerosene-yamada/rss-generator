@@ -9,7 +9,7 @@ import { runGovReport } from './govReport';
 const axiosConfig = {
   headers: {
     'User-Agent':
-      'Mozilla/5.0 (compatible; RSSBot/1.0; +https://github.com/YOUR_USERNAME/YOUR_REPO)',
+      'Mozilla/5.0 (compatible; RSSBot/1.0; +https://github.com/kerosene-yamada/rss-generator)',
   },
   timeout: 15000,
   responseType: 'arraybuffer' as const,
@@ -69,11 +69,11 @@ async function main(): Promise<void> {
 
   const items = await fetchAndScrape(sites);
   console.log(`Total items: ${items.length}`);
-  const feedUrl = 'https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml';
+  const feedUrl = 'https://kerosene-yamada.github.io/rss-generator/feed.xml';
   fs.writeFileSync(
     path.join(outputDir, 'feed.xml'),
     generateRss(items, 'リリースノート まとめ RSS', feedUrl),
-    'utf-8'
+    'utf-8',
   );
   console.log('Written: docs/feed.xml');
 }
