@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>リリースノート まとめ RSS</title>
-    <link>https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml</link>
+    <title>行政施策・審議会 まとめ RSS</title>
+    <link>https://YOUR_USERNAME.github.io/YOUR_REPO/gov-feed.xml</link>
     <description>複数サービスのリリースノート・お知らせをまとめたRSSフィード</description>
     <language>ja</language>
     <lastBuildDate>Wed, 18 Mar 2026 12:05:07 GMT</lastBuildDate>

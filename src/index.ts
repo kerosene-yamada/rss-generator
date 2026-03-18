@@ -2,32 +2,29 @@ import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
 import { sites } from './scrapers';
+import { govSites } from './govScrapers';
 import { generateRss } from './rssGenerator';
-import { FeedItem } from './types';
+import { FeedItem, SiteConfig } from './types';
 
-// EUC-JPなど文字コードが異なるサイト向けのヘッダー設定
 const axiosConfig = {
   headers: {
     'User-Agent':
-      'Mozilla/5.0 (compatible; RSSBot/1.0; +https://github.com/kerosene-yamada/rss-generator)',
+      'Mozilla/5.0 (compatible; RSSBot/1.0; +https://github.com/YOUR_USERNAME/YOUR_REPO)',
   },
   timeout: 15000,
-  // axiosはデフォルトでUTF-8として扱うため、EUC-JPサイトは別途対応
   responseType: 'arraybuffer' as const,
 };
 
-async function fetchAndScrape(): Promise<FeedItem[]> {
+async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
   const allItems: FeedItem[] = [];
 
-  for (const site of sites) {
+  for (const site of targetSites) {
     try {
       console.log(`Fetching: ${site.name}`);
       const response = await axios.get(site.url, axiosConfig);
 
-      // EUC-JPサイトはデコード（drive.xserver.ne.jp）
       let html: string;
       if (site.url.includes('xserver')) {
-        // Node.js標準のBufferでEUC-JPをデコード
         const iconv = await import('iconv-lite').catch(() => null);
         if (iconv) {
           html = iconv.decode(Buffer.from(response.data), 'EUC-JP');
@@ -42,7 +39,6 @@ async function fetchAndScrape(): Promise<FeedItem[]> {
       console.log(`  -> Found ${items.length} items`);
       allItems.push(...items);
     } catch (error) {
-      // エラーが出てもほかのサイトの処理を続ける
       if (error instanceof Error) {
         console.error(`  Error fetching ${site.name}: ${error.message}`);
       }
@@ -55,24 +51,32 @@ async function fetchAndScrape(): Promise<FeedItem[]> {
 async function main(): Promise<void> {
   console.log('Starting RSS generation...');
 
-  const items = await fetchAndScrape();
-  console.log(`Total items collected: ${items.length}`);
-
-  // GitHub PagesのURL（デプロイ後に自分のURLに変更してください）
-  const feedUrl = 'https://kerosene-yamada.github.io/rss-generator/feed.xml';
-
-  const rssContent = generateRss(items, 'リリースノート まとめ RSS', feedUrl);
-
-  // docs/feed.xml に出力（GitHub Pagesはdocsフォルダを使う）
   const outputDir = path.join(process.cwd(), 'docs');
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  const outputPath = path.join(outputDir, 'feed.xml');
-  fs.writeFileSync(outputPath, rssContent, 'utf-8');
+  // フィード1: サービス系リリースノート
+  const items = await fetchAndScrape(sites);
+  console.log(`Total items (services): ${items.length}`);
+  const feedUrl = 'https://YOUR_USERNAME.github.io/YOUR_REPO/feed.xml';
+  fs.writeFileSync(
+    path.join(outputDir, 'feed.xml'),
+    generateRss(items, 'リリースノート まとめ RSS', feedUrl),
+    'utf-8'
+  );
+  console.log('Written: docs/feed.xml');
 
-  console.log(`RSS feed written to: ${outputPath}`);
+  // フィード2: 政府・行政系
+  const govItems = await fetchAndScrape(govSites);
+  console.log(`Total items (gov): ${govItems.length}`);
+  const govFeedUrl = 'https://YOUR_USERNAME.github.io/YOUR_REPO/gov-feed.xml';
+  fs.writeFileSync(
+    path.join(outputDir, 'gov-feed.xml'),
+    generateRss(govItems, '行政施策・審議会 まとめ RSS', govFeedUrl),
+    'utf-8'
+  );
+  console.log('Written: docs/gov-feed.xml');
 }
 
 main().catch((err) => {
