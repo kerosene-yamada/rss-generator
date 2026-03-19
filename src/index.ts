@@ -154,10 +154,7 @@ async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
   return allItems;
 }
 
-async function uploadToGist(
-  filename: string,
-  xmlContent: string,
-): Promise<void> {
+async function uploadToGist(files: Record<string, string>): Promise<void> {
   const gistId = process.env.GIST_ID;
   const gistToken = process.env.GIST_TOKEN;
 
@@ -168,9 +165,14 @@ async function uploadToGist(
     return;
   }
 
+  const gistFiles: Record<string, {content: string}> = {};
+  for (const [filename, content] of Object.entries(files)) {
+    gistFiles[filename] = {content};
+  }
+
   await axios.patch(
     `https://api.github.com/gists/${gistId}`,
-    {files: {[filename]: {content: xmlContent}}},
+    {files: gistFiles},
     {
       headers: {
         Authorization: `Bearer ${gistToken}`,
@@ -178,7 +180,7 @@ async function uploadToGist(
       },
     },
   );
-  console.log(`Uploaded: ${filename} -> gist:${gistId}`);
+  console.log(`Uploaded to gist:${gistId} -> ${Object.keys(files).join(', ')}`);
 }
 
 async function main(): Promise<void> {
@@ -200,7 +202,6 @@ async function main(): Promise<void> {
     'Gemini API リリースノート',
     `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/gemini-feed.xml`,
   );
-  await uploadToGist('gemini-feed.xml', geminiXml);
 
   // HUG リリースノートフィード
   const hugItems = await fetchAndScrapeWithLogin(hugCopainSite, {
@@ -213,7 +214,11 @@ async function main(): Promise<void> {
     'HUG リリースノート',
     `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/hug-feed.xml`,
   );
-  await uploadToGist('hug-feed.xml', hugXml);
+
+  await uploadToGist({
+    'gemini-feed.xml': geminiXml,
+    'hug-feed.xml': hugXml,
+  });
 }
 
 main().catch((err) => {
