@@ -1,9 +1,14 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import {geminiSites, hugCopainSite} from './scrapers';
-import {generateRss} from './rssGenerator';
-import {FeedItem, SiteConfig, LoginSiteConfig} from './types';
-import {runGovReport} from './govReport';
+import {
+  geminiSites,
+  hugCopainSite,
+  mhlwAhakiSite,
+  mhlwShougaifukushiSite,
+} from './scrapers';
+import { generateRss } from './rssGenerator';
+import { FeedItem, SiteConfig, LoginSiteConfig } from './types';
+import { runGovReport } from './govReport';
 
 const axiosConfig = {
   headers: {
@@ -29,7 +34,7 @@ async function fetchAndScrapeWithLogin(
 
     // Step1: GETでセッションCookieと隠しフォームフィールドを取得
     const getRes = await axios.get(site.loginUrl, {
-      headers: {'User-Agent': axiosConfig.headers['User-Agent']},
+      headers: { 'User-Agent': axiosConfig.headers['User-Agent'] },
       responseType: 'arraybuffer' as const,
       validateStatus: (status) => status < 400,
     });
@@ -56,13 +61,13 @@ async function fetchAndScrapeWithLogin(
     }
 
     // Step2: 隠しフィールド＋認証情報でPOSTログイン
-    const postData = new URLSearchParams({...hiddenFields, ...credentials});
+    const postData = new URLSearchParams({ ...hiddenFields, ...credentials });
     const loginRes = await axios.post(site.loginUrl, postData, {
       headers: {
         'User-Agent': axiosConfig.headers['User-Agent'],
         'Content-Type': 'application/x-www-form-urlencoded',
         Referer: site.loginUrl,
-        ...(initCookieStr ? {Cookie: initCookieStr} : {}),
+        ...(initCookieStr ? { Cookie: initCookieStr } : {}),
       },
       maxRedirects: 0,
       validateStatus: (status) => status < 400,
@@ -95,7 +100,7 @@ async function fetchAndScrapeWithLogin(
     if (redirectUrl) {
       console.log(`  Login redirect -> ${redirectUrl}`);
       await axios.get(redirectUrl, {
-        headers: {...axiosConfig.headers, Cookie: cookieStr},
+        headers: { ...axiosConfig.headers, Cookie: cookieStr },
         maxRedirects: 3,
         validateStatus: (status) => status < 400,
       });
@@ -165,14 +170,14 @@ async function uploadToGist(files: Record<string, string>): Promise<void> {
     return;
   }
 
-  const gistFiles: Record<string, {content: string}> = {};
+  const gistFiles: Record<string, { content: string }> = {};
   for (const [filename, content] of Object.entries(files)) {
-    gistFiles[filename] = {content};
+    gistFiles[filename] = { content };
   }
 
   await axios.patch(
     `https://api.github.com/gists/${gistId}`,
-    {files: gistFiles},
+    { files: gistFiles },
     {
       headers: {
         Authorization: `Bearer ${gistToken}`,
@@ -215,9 +220,29 @@ async function main(): Promise<void> {
     `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/hug-feed.xml`,
   );
 
+  // あはき療養費検討専門委員会フィード
+  const ahakiItems = await fetchAndScrape([mhlwAhakiSite]);
+  console.log(`MHLW Ahaki items: ${ahakiItems.length}`);
+  const ahakiXml = generateRss(
+    ahakiItems,
+    '社会保障審議会 あはき療養費検討専門委員会',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/mhlw-ahaki-feed.xml`,
+  );
+
+  // 障害福祉サービス等報酬改定検討チームフィード
+  const shougaifukushiItems = await fetchAndScrape([mhlwShougaifukushiSite]);
+  console.log(`MHLW Shougaifukushi items: ${shougaifukushiItems.length}`);
+  const shougaifukushiXml = generateRss(
+    shougaifukushiItems,
+    '障害福祉サービス等報酬改定検討チーム',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/mhlw-shougaifukushi-feed.xml`,
+  );
+
   await uploadToGist({
     'gemini-feed.xml': geminiXml,
     'hug-feed.xml': hugXml,
+    'mhlw-ahaki-feed.xml': ahakiXml,
+    'mhlw-shougaifukushi-feed.xml': shougaifukushiXml,
   });
 }
 
