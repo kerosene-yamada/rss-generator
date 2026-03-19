@@ -1,9 +1,16 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import {geminiSites, hugCopainSite, mhlwShougaijiSite} from './scrapers';
-import {generateRss} from './rssGenerator';
-import {FeedItem, SiteConfig, LoginSiteConfig} from './types';
-import {runGovReport} from './govReport';
+import {
+  geminiSites,
+  hugCopainSite,
+  mhlwShougaijiSite,
+  mhlwAhakiSites,
+  cfaShougaijiSites,
+  mhlwShougaishabukaiSite,
+} from './scrapers';
+import { generateRss } from './rssGenerator';
+import { FeedItem, SiteConfig, LoginSiteConfig } from './types';
+import { runGovReport } from './govReport';
 
 const axiosConfig = {
   headers: {
@@ -29,7 +36,7 @@ async function fetchAndScrapeWithLogin(
 
     // Step1: GETでセッションCookieと隠しフォームフィールドを取得
     const getRes = await axios.get(site.loginUrl, {
-      headers: {'User-Agent': axiosConfig.headers['User-Agent']},
+      headers: { 'User-Agent': axiosConfig.headers['User-Agent'] },
       responseType: 'arraybuffer' as const,
       validateStatus: (status) => status < 400,
     });
@@ -56,13 +63,13 @@ async function fetchAndScrapeWithLogin(
     }
 
     // Step2: 隠しフィールド＋認証情報でPOSTログイン
-    const postData = new URLSearchParams({...hiddenFields, ...credentials});
+    const postData = new URLSearchParams({ ...hiddenFields, ...credentials });
     const loginRes = await axios.post(site.loginUrl, postData, {
       headers: {
         'User-Agent': axiosConfig.headers['User-Agent'],
         'Content-Type': 'application/x-www-form-urlencoded',
         Referer: site.loginUrl,
-        ...(initCookieStr ? {Cookie: initCookieStr} : {}),
+        ...(initCookieStr ? { Cookie: initCookieStr } : {}),
       },
       maxRedirects: 0,
       validateStatus: (status) => status < 400,
@@ -95,7 +102,7 @@ async function fetchAndScrapeWithLogin(
     if (redirectUrl) {
       console.log(`  Login redirect -> ${redirectUrl}`);
       await axios.get(redirectUrl, {
-        headers: {...axiosConfig.headers, Cookie: cookieStr},
+        headers: { ...axiosConfig.headers, Cookie: cookieStr },
         maxRedirects: 3,
         validateStatus: (status) => status < 400,
       });
@@ -165,14 +172,14 @@ async function uploadToGist(files: Record<string, string>): Promise<void> {
     return;
   }
 
-  const gistFiles: Record<string, {content: string}> = {};
+  const gistFiles: Record<string, { content: string }> = {};
   for (const [filename, content] of Object.entries(files)) {
-    gistFiles[filename] = {content};
+    gistFiles[filename] = { content };
   }
 
   await axios.patch(
     `https://api.github.com/gists/${gistId}`,
-    {files: gistFiles},
+    { files: gistFiles },
     {
       headers: {
         Authorization: `Bearer ${gistToken}`,
@@ -216,18 +223,44 @@ async function main(): Promise<void> {
   );
 
   // 厚生労働省 障害福祉サービス等報酬改定検討チーム
-  const mhlwItems = await fetchAndScrape([mhlwShougaijiSite]);
-  console.log(`MHLW items: ${mhlwItems.length}`);
-  const mhlwXml = generateRss(
-    mhlwItems,
-    '障害福祉サービス等報酬改定検討チーム',
-    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/mhlw-feed.xml`,
+  const mhlwShougaijiItems = await fetchAndScrape([mhlwShougaijiSite]);
+  console.log(`MHLW Shougaiji items: ${mhlwShougaijiItems.length}`);
+
+  // MHLW はり師・きゅう師及びあん摩・マッサージ・指圧師 療養費
+  const mhlwAhakiItems = await fetchAndScrape(mhlwAhakiSites);
+  console.log(`MHLW Ahaki items: ${mhlwAhakiItems.length}`);
+  const mhlwAhakiXml = generateRss(
+    mhlwAhakiItems,
+    'はり師・きゅう師及びあん摩・マッサージ・指圧師の施術に係る療養費',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/mhlw-ahaki-feed.xml`,
+  );
+
+  // CFA 障害児支援
+  const cfaShougaijiItems = await fetchAndScrape(cfaShougaijiSites);
+  console.log(`CFA Shougaiji items: ${cfaShougaijiItems.length}`);
+  const cfaShougaijiXml = generateRss(
+    cfaShougaijiItems,
+    '障害児支援（こども家庭庁）',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/cfa-shougaiji-feed.xml`,
+  );
+
+  // MHLW 社会保障審議会（障害者部会）＋障害福祉サービス等報酬改定検討チーム（統合）
+  const mhlwShougaishabukaiItems = await fetchAndScrape([
+    mhlwShougaishabukaiSite,
+  ]);
+  console.log(`MHLW Shougaishabukai items: ${mhlwShougaishabukaiItems.length}`);
+  const mhlwShougaishabukaiXml = generateRss(
+    [...mhlwShougaishabukaiItems, ...mhlwShougaijiItems],
+    '社会保障審議会（障害者部会）・障害福祉サービス等報酬改定検討チーム',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/mhlw-shougaishabukai-feed.xml`,
   );
 
   await uploadToGist({
     'gemini-feed.xml': geminiXml,
     'hug-feed.xml': hugXml,
-    'mhlw-feed.xml': mhlwXml,
+    'mhlw-ahaki-feed.xml': mhlwAhakiXml,
+    'cfa-shougaiji-feed.xml': cfaShougaijiXml,
+    'mhlw-shougaishabukai-feed.xml': mhlwShougaishabukaiXml,
   });
 }
 
