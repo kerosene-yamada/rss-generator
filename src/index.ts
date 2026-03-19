@@ -1,7 +1,5 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import * as fs from 'fs';
-import * as path from 'path';
 import {geminiSites, hugCopainSite} from './scrapers';
 import {generateRss} from './rssGenerator';
 import {FeedItem, SiteConfig, LoginSiteConfig} from './types';
@@ -156,7 +154,10 @@ async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
   return allItems;
 }
 
-async function uploadToGist(xmlContent: string): Promise<void> {
+async function uploadToGist(
+  filename: string,
+  xmlContent: string,
+): Promise<void> {
   const gistId = process.env.GIST_ID;
   const gistToken = process.env.GIST_TOKEN;
 
@@ -169,7 +170,7 @@ async function uploadToGist(xmlContent: string): Promise<void> {
 
   await axios.patch(
     `https://api.github.com/gists/${gistId}`,
-    {files: {'hug-feed.xml': {content: xmlContent}}},
+    {files: {[filename]: {content: xmlContent}}},
     {
       headers: {
         Authorization: `Bearer ${gistToken}`,
@@ -177,7 +178,7 @@ async function uploadToGist(xmlContent: string): Promise<void> {
       },
     },
   );
-  console.log(`Uploaded: hug-feed.xml -> gist:${gistId}`);
+  console.log(`Uploaded: ${filename} -> gist:${gistId}`);
 }
 
 async function main(): Promise<void> {
@@ -190,24 +191,16 @@ async function main(): Promise<void> {
   }
 
   console.log('Mode: rss');
-  const outputDir = path.join(process.cwd(), 'docs');
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, {recursive: true});
-  }
 
   // Gemini APIフィード
   const geminiItems = await fetchAndScrape(geminiSites);
   console.log(`Gemini items: ${geminiItems.length}`);
-  fs.writeFileSync(
-    path.join(outputDir, 'gemini-feed.xml'),
-    generateRss(
-      geminiItems,
-      'Gemini API リリースノート',
-      'https://kerosene-yamada.github.io/rss-generator/gemini-feed.xml',
-    ),
-    'utf-8',
+  const geminiXml = generateRss(
+    geminiItems,
+    'Gemini API リリースノート',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/gemini-feed.xml`,
   );
-  console.log('Written: docs/gemini-feed.xml');
+  await uploadToGist('gemini-feed.xml', geminiXml);
 
   // HUG リリースノートフィード
   const hugItems = await fetchAndScrapeWithLogin(hugCopainSite, {
@@ -220,7 +213,7 @@ async function main(): Promise<void> {
     'HUG リリースノート',
     `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/hug-feed.xml`,
   );
-  await uploadToGist(hugXml);
+  await uploadToGist('hug-feed.xml', hugXml);
 }
 
 main().catch((err) => {
