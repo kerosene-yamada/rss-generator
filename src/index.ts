@@ -8,7 +8,6 @@ import {
 } from './scrapers';
 import { generateRss } from './rssGenerator';
 import { FeedItem, SiteConfig, LoginSiteConfig } from './types';
-import { runGovReport } from './govReport';
 
 const axiosConfig = {
   headers: {
@@ -189,14 +188,6 @@ async function uploadToGist(files: Record<string, string>): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const mode = process.env.RUN_MODE ?? 'rss';
-
-  if (mode === 'gov-report') {
-    console.log('Mode: gov-report');
-    await runGovReport();
-    return;
-  }
-
   console.log('Mode: rss');
 
   // Gemini APIフィード
