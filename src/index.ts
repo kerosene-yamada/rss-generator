@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import {geminiSites, hugCopainSite, mhlwShougaijiSite} from './scrapers';
+import {geminiSites, hugCopainSite} from './scrapers';
 import {generateRss} from './rssGenerator';
 import {FeedItem, SiteConfig, LoginSiteConfig} from './types';
 import {runGovReport} from './govReport';
@@ -215,19 +215,9 @@ async function main(): Promise<void> {
     `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/hug-feed.xml`,
   );
 
-  // 厚生労働省 障害福祉サービス等報酬改定検討チーム
-  const mhlwItems = await fetchAndScrape([mhlwShougaijiSite]);
-  console.log(`MHLW items: ${mhlwItems.length}`);
-  const mhlwXml = generateRss(
-    mhlwItems,
-    '障害福祉サービス等報酬改定検討チーム',
-    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/mhlw-feed.xml`,
-  );
-
   await uploadToGist({
     'gemini-feed.xml': geminiXml,
     'hug-feed.xml': hugXml,
-    'mhlw-feed.xml': mhlwXml,
   });
 }
 
