@@ -156,6 +156,30 @@ async function fetchAndScrape(targetSites: SiteConfig[]): Promise<FeedItem[]> {
   return allItems;
 }
 
+async function uploadToGist(xmlContent: string): Promise<void> {
+  const gistId = process.env.GIST_ID;
+  const gistToken = process.env.GIST_TOKEN;
+
+  if (!gistId || !gistToken) {
+    console.warn(
+      'GIST_ID / GIST_TOKEN が未設定のためGistへのアップロードをスキップします',
+    );
+    return;
+  }
+
+  await axios.patch(
+    `https://api.github.com/gists/${gistId}`,
+    {files: {'hug-feed.xml': {content: xmlContent}}},
+    {
+      headers: {
+        Authorization: `Bearer ${gistToken}`,
+        Accept: 'application/vnd.github+json',
+      },
+    },
+  );
+  console.log(`Uploaded: hug-feed.xml -> gist:${gistId}`);
+}
+
 async function main(): Promise<void> {
   const mode = process.env.RUN_MODE ?? 'rss';
 
@@ -191,16 +215,12 @@ async function main(): Promise<void> {
     password: process.env.HUG_PASS ?? '',
   });
   console.log(`HUG items: ${hugItems.length}`);
-  fs.writeFileSync(
-    path.join(outputDir, 'hug-feed.xml'),
-    generateRss(
-      hugItems,
-      'HUG リリースノート',
-      'https://kerosene-yamada.github.io/rss-generator/hug-feed.xml',
-    ),
-    'utf-8',
+  const hugXml = generateRss(
+    hugItems,
+    'HUG リリースノート',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/hug-feed.xml`,
   );
-  console.log('Written: docs/hug-feed.xml');
+  await uploadToGist(hugXml);
 }
 
 main().catch((err) => {
