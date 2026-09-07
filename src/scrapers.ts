@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import { FeedItem, SiteConfig, LoginSiteConfig } from './types';
+import {FeedItem, SiteConfig} from './types';
 
 export const geminiSites: SiteConfig[] = [
   {
@@ -75,42 +75,4 @@ export const mhlwShougaifukushiSite: SiteConfig = {
   name: '障害福祉サービス等報酬改定検討チーム',
   url: 'https://www.mhlw.go.jp/stf/shingi/other-syougai_446935_00001.html',
   scraper: createMhlwShingiScraper('障害福祉サービス等報酬改定検討チーム'),
-};
-
-export const hugCopainSite: LoginSiteConfig = {
-  name: 'HUG リリースノート',
-  loginUrl: 'https://www.hug-copain-sakura-be.link/hug/wm/',
-  url: 'https://www.hug-copain-sakura-be.link/hug/wm/release_note.php',
-  scraper: (html, baseUrl) => {
-    const $ = cheerio.load(html);
-    const items: FeedItem[] = [];
-
-    $('table.table_release_note tr').each((_, tr) => {
-      const meta = $(tr).find('ul.releaseMeta');
-      if (!meta.length) return;
-
-      const lis = meta.find('li');
-      const date = lis.eq(0).text().trim();
-      const version = lis.eq(1).text().trim();
-
-      // ul.releaseMeta を除いた td のテキストを説明文として取得
-      const td = $(tr).find('td');
-      meta.remove();
-      const description = td.text().trim().replace(/\s+/g, ' ').slice(0, 300);
-
-      if (date && version) {
-        // バージョン+日付でユニークなguidを生成
-        const guid = `${baseUrl}#${version}-${date.replace(/[年月日\s]/g, '-')}`;
-        items.push({
-          title: `${version} (${date})`,
-          link: baseUrl,
-          guid,
-          date,
-          description,
-        });
-      }
-    });
-
-    return items.slice(0, 20);
-  },
 };

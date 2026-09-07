@@ -27,8 +27,6 @@ jobs:
         run: npx ts-node src/index.ts
         env:
           RUN_MODE: rss
-          HUG_USER: ${{ secrets.HUG_USER }}
-          HUG_PASS: ${{ secrets.HUG_PASS }}
           GIST_ID: ${{ secrets.GIST_ID }}
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_OWNER: ${{ github.repository_owner }}

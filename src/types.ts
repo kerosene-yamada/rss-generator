@@ -11,10 +11,3 @@ export interface SiteConfig {
   url: string;
   scraper: (html: string, baseUrl: string) => FeedItem[];
 }
-
-export interface LoginSiteConfig {
-  name: string;
-  loginUrl: string;
-  url: string;
-  scraper: (html: string, baseUrl: string) => FeedItem[];
-}
