@@ -1,5 +1,10 @@
 import axios from 'axios';
-import {geminiSites, mhlwAhakiSite, mhlwShougaifukushiSite} from './scrapers';
+import {
+  geminiSites,
+  mhlwAhakiSite,
+  mhlwShougaifukushiSite,
+  pluginSites,
+} from './scrapers';
 import {generateRss} from './rssGenerator';
 import {FeedItem, SiteConfig} from './types';
 
@@ -94,7 +99,17 @@ async function main(): Promise<void> {
     `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/mhlw-shougaifukushi-feed.xml`,
   );
 
+  // kintoneプラグイン更新・セキュリティ情報フィード
+  const pluginItems = await fetchAndScrape(pluginSites);
+  console.log(`Plugin items: ${pluginItems.length}`);
+  const pluginXml = generateRss(
+    pluginItems,
+    'kintoneプラグイン 更新・セキュリティ情報',
+    `https://gist.githubusercontent.com/${process.env.GIST_OWNER ?? 'me'}/raw/plugin-updates-feed.xml`,
+  );
+
   await uploadToGist({
+    'plugin-updates-feed.xml': pluginXml,
     'gemini-feed.xml': geminiXml,
     'mhlw-ahaki-feed.xml': ahakiXml,
     'mhlw-shougaifukushi-feed.xml': shougaifukushiXml,
